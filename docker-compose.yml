@@ -1,16 +1,4 @@
 services:
-
-  build-apps:
-    image: maven:3.8.6-openjdk-23
-    container_name: build-apps
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: mvn clean package
-    depends_on:
-      - eureka-server
-      - category-db
-      - transaction-db
       
   eureka-server:
     image: eurekaserver:latest
@@ -29,6 +17,7 @@ services:
     image: mysql:8.0
     container_name: category-db
     restart: always
+    command: --port=3307
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: lotto_categories
@@ -45,13 +34,14 @@ services:
     image: mysql:8.0
     container_name: transaction-db
     restart: always
+    command: --port=3308
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: lotto_transactions
       MYSQL_USER: user
       MYSQL_PASSWORD: transactions
     ports:
-      - "3308:3309"
+      - "3308:3306"
     volumes:
       - ./db-init/transaction:/docker-entrypoint-initdb.d
     networks:
@@ -64,13 +54,12 @@ services:
       dockerfile: Dockerfile
     environment:
       SERVER_PORT: 8081
-      SPRING_DATASOURCE_URL: jdbc:mysql://category-db:3307/lotto_categories?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://category-db:3307/lotto_categories
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: categories
       SPRING_APPLICATION_NAME: lotto-category
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     depends_on:
-      - build-apps
       - category-db
       - eureka-server
     ports:
@@ -85,13 +74,12 @@ services:
       dockerfile: Dockerfile
     environment:
       SERVER_PORT: 8082
-      SPRING_DATASOURCE_URL: jdbc:mysql://transaction-db:3308/lotto_transaction?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://transaction-db:3308/lotto_transaction
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: transactions
       SPRING_APPLICATION_NAME: lotto-transaction
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     depends_on:
-      - build-apps
       - transaction-db
       - eureka-server
       - lotto-category
