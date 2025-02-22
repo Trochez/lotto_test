@@ -58,7 +58,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: transactions
     ports:
-      - "3308:3306"
+      - "3308:3309"
     volumes:
       - ./db-init/transaction:/docker-entrypoint-initdb.d
     networks:
