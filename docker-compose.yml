@@ -1,0 +1,86 @@
+services:
+  eureka-server:
+    image: eurekaserver:latest
+    container_name: eureka-server
+    build:
+      context: ./eureka
+      dockerfile: Dockerfile
+    environment:
+      SERVER_PORT: 8761
+    ports:
+      - "8761:8761"
+    networks:
+      - lotto-network
+
+  category-db:
+    image: mysql:8.0
+    container_name: category-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lotto_categories
+      MYSQL_USER: user
+      MYSQL_PASSWORD: categories
+    ports:
+      - "3307:3306"
+    networks:
+      - lotto-network
+
+  lotto-category:
+    image: lotto_category:latest
+    build:
+      context: ./lotto_category
+      dockerfile: Dockerfile
+    environment:
+      SERVER_PORT: 8081
+      SPRING_DATASOURCE_URL: jdbc:mysql://category-db:3307/lotto_categories?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: categories
+      SPRING_APPLICATION_NAME: lotto-category
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      - category-db
+      - eureka-server
+    ports:
+      - "8081:8081"
+    networks:
+      - lotto-network
+
+  transaction-db:
+    image: mysql:8.0
+    container_name: transaction-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lotto_transactions
+      MYSQL_USER: user
+      MYSQL_PASSWORD: transactions
+    ports:
+      - "3308:3306"
+    networks:
+      - lotto-network
+
+  lotto-transaction:
+    image: lotto_transaction:latest
+    build:
+      context: ./lotto_transaction
+      dockerfile: Dockerfile
+    environment:
+      SERVER_PORT: 8082
+      SPRING_DATASOURCE_URL: jdbc:mysql://transaction-db:3308/lotto_transaction?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: transactions
+      SPRING_APPLICATION_NAME: lotto-transaction
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      - transaction-db
+      - eureka-server
+      - lotto-category
+    ports:
+      - "8082:8082"
+    networks:
+      - lotto-network
+
+networks:
+  lotto-network:
+    driver: bridge
