@@ -23,6 +23,8 @@ services:
       MYSQL_PASSWORD: categories
     ports:
       - "3307:3306"
+    volumes:
+      - ./dbinit/category:/docker-entrypoint-initdb.d
     networks:
       - lotto-network
 
@@ -57,6 +59,8 @@ services:
       MYSQL_PASSWORD: transactions
     ports:
       - "3308:3306"
+    volumes:
+      - ./db-init/transaction:/docker-entrypoint-initdb.d
     networks:
       - lotto-network
 
