@@ -287,7 +287,7 @@ Existen múltiples herramientas y bibliotecas para la integración con bases de 
 
 Naturaleza del proyecto
 
-El proyecto demanda representacion de entidades puntuales como transacciones y categorias, estas entidades se pueden implementar facilmente en java debido a que este lenguaje presenta una gran facilidad para orientarse a objetos, adicionalmente, los objetos representados se pueden persistir facilmente en la base de datos mediante el uso de librerias ya contruidas
+El proyecto demanda representacion de entidades puntuales como transacciones y categorias, estas entidades se pueden implementar facilmente en java debido a que este lenguaje presenta una gran facilidad para orientarse a objetos, adicionalmente, los objetos representados se pueden persistir facilmente en la base de datos mediante el uso de librerias ya construidas
 
 Mantenimiento y Soporte
 
@@ -325,7 +325,7 @@ El pool de conexiones administrado por HikariCP optimiza el acceso concurrente a
 
 Naturaleza del proyecto
 
-El proyecto demanda representacion de entidades puntuales como transacciones y categorias, estas entidades se pueden representar facilmente en tablas MySQL debido a que tienen bien definidos sus propiedades que se representarian como campos de la tabla.
+El proyecto demanda representacion de entidades puntuales como transacciones y categorias, estas entidades se pueden representar facilmente en tablas MySQL debido a que tienen bien definidos sus propiedades que se representan como campos de la tabla.
 
 Soporte y Comunidad
 
