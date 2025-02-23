@@ -50,7 +50,7 @@ public class CategoryController {
             if (e.getMessage().equals("Category already exists")) {
                 throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Category already exists", e);
             }
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error creating category", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error creating caegory", e);
         }
     }
 
