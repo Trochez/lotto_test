@@ -15,12 +15,28 @@ public class CategorySeederService {
     private CategoryRepository categoryRepository;
 
     public List<Category> seedCategories() {
+
+        Category category1 = new Category();
+        category1.setName("Food");
+
+        Category category2 = new Category();
+        category2.setName("Transport");
+
+        Category category3 = new Category();
+        category3.setName("Entertainment");
+
+        Category category4 = new Category();
+        category4.setName("Health");
+
+        Category category5 = new Category();
+        category5.setName("Education");
+
         List<Category> categories = Arrays.asList(
-                new Category(1L, "Food"),
-                new Category(2L, "Transport"),
-                new Category(3L, "Entertainment"),
-                new Category(4L, "Health"),
-                new Category(5L, "Education")
+            category1,
+            category2,
+            category3,
+            category4,
+            category5
         );
         return categoryRepository.saveAll(categories);
     }

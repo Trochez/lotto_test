@@ -24,11 +24,16 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: categories
     ports:
-      - "3307:3306"
+      - "3307:3307"
     volumes:
       - ./dbinit/category:/docker-entrypoint-initdb.d
     networks:
       - lotto-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 20s
 
   transaction-db:
     image: mysql:8.0
@@ -41,11 +46,16 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: transactions
     ports:
-      - "3308:3306"
+      - "3308:3308"
     volumes:
-      - ./db-init/transaction:/docker-entrypoint-initdb.d
+      - ./dbinit/transaction:/docker-entrypoint-initdb.d
     networks:
       - lotto-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 20s
 
   lotto-category:
     image: lotto_category:latest
@@ -60,8 +70,10 @@ services:
       SPRING_APPLICATION_NAME: lotto-category
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     depends_on:
-      - category-db
-      - eureka-server
+      eureka-server:
+        condition: service_started
+      category-db:
+        condition: service_healthy
     ports:
       - "8081:8081"
     networks:
@@ -74,15 +86,18 @@ services:
       dockerfile: Dockerfile
     environment:
       SERVER_PORT: 8082
-      SPRING_DATASOURCE_URL: jdbc:mysql://transaction-db:3308/lotto_transaction
+      SPRING_DATASOURCE_URL: jdbc:mysql://transaction-db:3308/lotto_transactions
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: transactions
       SPRING_APPLICATION_NAME: lotto-transaction
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     depends_on:
-      - transaction-db
-      - eureka-server
-      - lotto-category
+      eureka-server:
+        condition: service_started
+      transaction-db:
+        condition: service_healthy
+      lotto-category:
+        condition: service_started
     ports:
       - "8082:8082"
     networks:

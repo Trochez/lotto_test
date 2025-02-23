@@ -1,6 +1,11 @@
 # Usar OpenJDK 23 como base
 FROM openjdk:23-jdk-slim AS builder
 
+# Instalar curl
+RUN apt-get update && \
+    apt-get install -y curl && \
+    rm -rf /var/lib/apt/lists/*
+
 # Instalar Maven
 RUN apt update && apt install -y maven
 
