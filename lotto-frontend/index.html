@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microfrontends con Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .menu { display: flex; gap: 10px; margin-bottom: 20px; }
+        .menu button { padding: 10px; cursor: pointer; }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="app">
+        <h1>Gestión de Transacciones y Categorías</h1>
+
+        <!-- Menú de Navegación -->
+        <div class="menu-container">
+            <button @click="currentView = 'transactions'">Transacciones</button>
+            <button @click="currentView = 'categories'">Categorías</button>
+            <button @click="currentView = 'seeder'">Seeder</button>
+        </div>
+
+        <!-- Contenedor dinámico de componentes -->
+        <component :is="currentView"></component>
+    </div>
+
+    <script type="module">
+        import Transactions from "./components/transactions.js";
+        import Categories from "./components/categories.js";
+        import Seeder from "./components/seeder.js";
+
+        const { createApp } = Vue;
+
+        const app = createApp({
+            data() {
+                return {
+                    currentView: "transactions"  // Carga Transacciones por defecto
+                };
+            },
+            components: {
+                transactions: Transactions,
+                categories: Categories,
+                seeder: Seeder
+            }
+        });
+
+        app.mount("#app");
+    </script>
+
+</body>
+</html>

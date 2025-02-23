@@ -59,6 +59,7 @@ services:
 
   lotto-category:
     image: lotto_category:latest
+    container_name: lotto-category
     build:
       context: ./lotto_category
       dockerfile: Dockerfile
@@ -81,6 +82,7 @@ services:
 
   lotto-transaction:
     image: lotto_transaction:latest
+    container_name: lotto-transaction
     build:
       context: ./lotto_transaction
       dockerfile: Dockerfile
@@ -102,6 +104,21 @@ services:
       - "8082:8082"
     networks:
       - lotto-network
+
+  frontend:
+    image: lotto-frontend:latest
+    container_name: lotto-frontend
+    build:
+      context: ./lotto-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    networks:
+      - lotto-network
+    depends_on:
+      - eureka-server
+      - lotto-category
+      - lotto-transaction
 
 networks:
   lotto-network:
