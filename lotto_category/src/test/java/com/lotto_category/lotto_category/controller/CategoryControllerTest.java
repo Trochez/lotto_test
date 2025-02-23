@@ -84,7 +84,7 @@ public class CategoryControllerTest {
 
         // Verificamos que el código HTTP sea 500 (INTERNAL_SERVER_ERROR)
         ResponseStatusException responseException = (ResponseStatusException) exception;
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), responseException.getStatusCode().value());
+        assertEquals(HttpStatus.METHOD_NOT_ALLOWED.value(), responseException.getStatusCode().value());
         assertEquals("Error creating caegory", responseException.getReason());
         
         // Verificamos que se llamó al método createCategory del servicio

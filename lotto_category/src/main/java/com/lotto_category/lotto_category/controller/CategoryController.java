@@ -44,12 +44,14 @@ public class CategoryController {
     @Operation(summary = "Crear una nueva categoría", description = "Permite crear una nueva categoría de gastos.")
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         try{
-
             Category createdCategory = categoryService.createCategory(category);
             return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
-            
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error creating caegory", e);
+        } catch (RuntimeException e) {
+            if (e.getMessage().equals("Category already exists")) {
+                throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Category already exists", e);
+            }
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error creating category", e);
         }
     }
+
 }
