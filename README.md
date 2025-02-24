@@ -243,25 +243,25 @@ curl -X GET http://localhost:8082/transaction-seeder/seed
 
 ---
 
-## ** Ejecución de Pruebas Unitarias
+## **Ejecución de Pruebas Unitarias**
 
 Para ejecutar las pruebas unitarias de los microservicios, usa los siguientes comandos dentro del contenedor o en la máquina local si tienes el entorno configurado y los dockers levantados con las aplicaciones funcionando correctamente:
 
-Ejecutar pruebas en el microservicio de categorías
+Ejecutar pruebas en el microservicio de categorías:
 
-docker-compose exec lotto-category mvn test
+`docker-compose exec lotto-category mvn test`
 
-Ejecutar pruebas en el microservicio de transacciones
+Ejecutar pruebas en el microservicio de transacciones:
 
-docker-compose exec lotto-transaction mvn test
+`docker-compose exec lotto-transaction mvn test`
 
-Ejecutar pruebas en todos los servicios de forma manual. Para este comando es necesario estar dentro de la carpeta del proyecto especifico (ej: proyecto_lotto/lotto_category/) y reemplazar las variables de entorno definidas en el archvo proyecto_lotto/lotto_category/src/main/resources/application.properties por los valores finales o definitivos
+Ejecutar pruebas en todos los servicios de forma manual. Para este comando es necesario estar dentro de la carpeta del proyecto especifico (ej: proyecto_lotto/lotto_category/) y reemplazar las variables de entorno definidas en el archvo proyecto_lotto/lotto_category/src/main/resources/application.properties por los valores finales o definitivos:
 
-mvn test
+`mvn test`
 
 ---
 
-## ** Justificación del Lenguaje Backend
+## **Justificación del Lenguaje Backend**
 
 Elección de Java con Spring Boot
 
@@ -301,7 +301,7 @@ La version openjdk permite utilizar java sin necesidad de pagar una licencia evi
 
 ---
 
-## **  Justificación de la Base de Datos Utilizada
+## **Justificación de la Base de Datos Utilizada**
 
 Elección de MySQL
 
