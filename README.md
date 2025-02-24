@@ -201,7 +201,7 @@ docker-compose restart category-db transaction-db
 
 ---
 
-Ejemplos de Uso de los Endpoints
+## ** Ejemplos de Uso de los Endpoints
 
 Una vez desplegados los microservicios, puedes probar los endpoints con curl o Postman.
 
@@ -243,9 +243,9 @@ curl -X GET http://localhost:8082/transaction-seeder/seed
 
 ---
 
-Ejecución de Pruebas Unitarias
+## ** Ejecución de Pruebas Unitarias
 
-Para ejecutar las pruebas unitarias de los microservicios, usa los siguientes comandos dentro del contenedor o en la máquina local si tienes el entorno configurado:
+Para ejecutar las pruebas unitarias de los microservicios, usa los siguientes comandos dentro del contenedor o en la máquina local si tienes el entorno configurado y los dockers levantados con las aplicaciones funcionando correctamente:
 
 Ejecutar pruebas en el microservicio de categorías
 
@@ -259,9 +259,9 @@ Ejecutar pruebas en todos los servicios de forma manual. Para este comando es ne
 
 mvn test
 
-Si prefieres ejecutar las pruebas fuera de Docker, dentro del proyecto de cada servicio:
+---
 
-Justificación del Lenguaje Backend
+## ** Justificación del Lenguaje Backend
 
 Elección de Java con Spring Boot
 
@@ -299,7 +299,9 @@ No tiene licencia.
 
 La version openjdk permite utilizar java sin necesidad de pagar una licencia evitando estos costos
 
-Justificación de la Base de Datos Utilizada
+---
+
+## **  Justificación de la Base de Datos Utilizada
 
 Elección de MySQL
 
