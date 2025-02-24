@@ -201,7 +201,7 @@ docker-compose restart category-db transaction-db
 
 ---
 
-## ** Ejemplos de Uso de los Endpoints
+## **Ejemplos de Uso de los Endpoints**
 
 Una vez desplegados los microservicios, puedes probar los endpoints con curl o Postman.
 
